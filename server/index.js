@@ -32,6 +32,8 @@ const server = SSLApp({key_file_name: key, cert_file_name: cert}).ws('/*', {
 			other.other = ws
 			other = null
 		}else other = ws
+		const ip = new Uint8Array(ws.getRemoteAddressAsText())
+		console.log('\x1b[35;1m'+new Date().toISOString()+']\x1b[m '+Buffer.prototype.utf8Slice.call(ip))
 	},
 	message(ws, buf, isBinary){
 		const t = performance.now()

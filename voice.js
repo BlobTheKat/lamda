@@ -46,7 +46,7 @@ function addChatMsg(name, msg){
 }
 
 const actx = new AudioContext({sampleRate: 22050})
-
+addEventListener('click', () => void(actx.state !== 'running' && actx.resume()), {once: true})
 const Q = 1024
 const outLookup = new Uint8Array(Q*2), inLookup = new Float32Array(256)
 const outFilter = i => Math.sqrt(Math.abs(i))*Math.sign(i)
