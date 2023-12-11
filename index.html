@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" style="height: 100%">
+<html lang="en" style="height: 100%" ongesturestart="event.preventDefault()" onwheel="if(event.ctrlKey) event.preventDefault()" ontouchend="if(!event.isTrusted) return; event.preventDefault(); event.target.dispatchEvent(new TouchEvent('touchend', event)); event.target.dispatchEvent(new MouseEvent('click', event))">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +7,10 @@
 	<meta name="og:title" content="Lamda voice chat" />
 	<meta name="og:description" content="Chat anonymously with strangers online" />
 	<meta name="og:image" content="https://lamda.count.land/img/icon.png" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-touch-icon" content="/img/icon.png" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="#222">
 	<title>Lamda</title>
 	<link rel="shortcut icon" href="/img/icon.png" />
 	<style>
@@ -15,7 +19,7 @@
 			font-family: font;
 			src: url(/res/font.ttf);
 		}
-		* { box-sizing: border-box }
+		* { box-sizing: border-box; -webkit-touch-callout: none; touch-action: manipulation !important; }
 		body, p, div, span {
 			font-family: font;
 		}
@@ -27,8 +31,9 @@
 			align-items: center;
 			justify-content: center;
 			width: 100%; height: 100%;
-			margin: 0; gap: 10px;
+			margin: 0;
 			user-select: none;
+			-webkit-user-select: none;
 			position: fixed;
 		}
 		#logo{
@@ -84,6 +89,7 @@
 			border: 1px dashed #fff8;
 			padding: 10px;
 			border-radius: 4px;
+			margin: 10px 0;
 		}
 		input, button{
 			outline: none;
@@ -113,7 +119,7 @@
 			width: min(300px, calc(100% - 100px));
 			background: #4d4a47;
 		}
-		#disconnect{ background: #e22; }
+		#disconnect{ background: #e22; margin-top: 10px; }
 		#skip{ background-color: #25e; }
 		#duration{ opacity: 0.2; }
 		#voice-in, #voice-out{
@@ -126,11 +132,15 @@
 			align-items: center;
 			gap: 10px;
 		}
+		#voice-out{
+			margin: 10px 0;
+		}
 		#chat-container{
 			width: min(300px, calc(100% - 100px));
 			display: flex;
 			flex-direction: column;
 			max-height: calc(100% - 450px);
+			margin: 10px 0;
 		}
 		#chat-message, #chat-message-2{
 			overflow: scroll;
@@ -176,12 +186,22 @@
 			transition: .2s width;
 			transform-origin: left center;
 		}
-		:disabled{opacity: .4; cursor: not-allowed;}
+		:disabled{ opacity: .4; cursor: not-allowed }
+		hr{ border: none; opacity: 0; display: inline }
+		@media screen and (max-width: 511px) {
+			#speakinginfo{
+				font-size: .9em;
+			}
+			#speaking{
+				font-size: 1.38em;
+			}
+		}
 	</style>
 </head>
 <body>
 	<div id="homepage">
-		<div style="font-size:2.8em; margin-top: 96px;">Lamda</div>
+		<hr style="flex-grow: 1" />
+		<div style="font-size:2.8em">Lamda</div>
 		<div><strong>Chat with strangers around the world!</strong></div>
 		<div class="home-desc">
 			<p>When you use lamda, we pick someone else at random and let you talk 1:1 with them.</p>
@@ -192,13 +212,14 @@
 		<input id="username" type="text" class="ui-input" maxlength="32" placeholder="Display name (optional)"
 			oninput="localStorage.name = this.value" onkeypress="if(event.keyCode===13)this.nextElementSibling.click()">
 		<button id="join" class="ui-button" style="background-color: #3469ac">Join chat</button>
+		<hr style="flex-grow: 2" />
 	</div>
 	<img src="./img/icon.png" draggable="false" id="logo">
 	<div id="logoname">Lamda</div>
-	<div style="flex-grow:5"></div>
+	<hr style="flex-grow:10" />
 	<div id="speakinginfo">Connecting...</div>
 	<div id="speaking"></div>
-	<div style="flex-grow:1"></div>
+	<hr style="flex-grow:1" />
 	<div id="voice-in">
 		<canvas id="in-gram"></canvas>
 		<button id="deafen" title="Keybind: N" style="background: url(/img/deafen.svg) center/cover;"></button>
@@ -213,10 +234,10 @@
 		<p id="chat-message"></p>
 		<input id="chat-input" type="text" maxlength="300" placeholder="Send message" style="background-color: transparent;">
 	</div>
-	<div style="flex-grow:0.6"></div>
+	<hr style="flex-grow:.5" />
 	<button id="skip" class="ui-button" title="Keybind: S">Skip</button>
 	<button id="disconnect" class="ui-button" title="Keybind: D">Disconnect</button>
-	<div style="flex-grow:5"></div>
+	<hr style="flex-grow:5" />
 </body>
 <script src="index.js" type="module"></script>
 </html>
