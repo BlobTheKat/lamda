@@ -150,7 +150,7 @@ export function joinSession(){
 	skinBtn.textContent = 'Skip'
 	skinBtn.style.visibility = 'hidden'
 	if(w) leaveSession()
-	w = new WebSocket((localStorage.server || 'wss://local.blobk.at:81') + '/' + encodeURI(localStorage.name || 'anonymous'))
+	w = new WebSocket((localStorage.server || 'ws'+location.protocol.slice(4)+'//server.'+location.hostname+':81') + '/' + encodeURI(localStorage.name || 'anonymous'))
 	w.binaryType = 'arraybuffer'
 	w.onopen = () => speaking.innerHTML = '<img style="filter:invert(1);mix-blend-mode:plus-lighter" src=https://upload.wikimedia.org/wikipedia/commons/c/c1/Animated_loading_half-circle.gif /> Finding another person...'
 	lastJ = 0
