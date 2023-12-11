@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" style="height: 100%" ongesturestart="event.preventDefault()" onwheel="if(event.ctrlKey) event.preventDefault()" ontouchend="if(!event.isTrusted) return; event.preventDefault(); event.target.dispatchEvent(new TouchEvent('touchend', event)); event.target.dispatchEvent(new MouseEvent('click', event))">
+<html lang="en" style="height: 100%" ongesturestart="event.preventDefault()" onwheel="if(event.ctrlKey) event.preventDefault()" ontouchend="if(!event.isTrusted) return; event.preventDefault(); event.target.dispatchEvent(new TouchEvent('touchend', event)); event.target.click?.(); event.target.focus?.()">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
