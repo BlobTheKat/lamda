@@ -26,7 +26,7 @@ disconnectBtn.onclick = leaveSession
 skinBtn.onclick = joinSession
 const usernameInput = $('#username')
 usernameInput.value = localStorage.name || ''
-const chat = $('#chat-message')
+const chat = $('#chat-message'), chat2 = $('#chat-message-2')
 const chatInput = $('#chat-input')
 chatInput.onkeydown = (e) => {
 	if(!conn || e.keyCode != 13) return
@@ -37,12 +37,16 @@ chatInput.onkeydown = (e) => {
 let chatHideTimeout = -1
 $('#join').onclick = joinSession
 
+let oldName = '', oldContent = ''
 function addChatMsg(name, msg){
-	chat.style.opacity = '1'
-	chat.setAttribute('data-name', name)
-	chat.textContent = msg
-	clearTimeout(chatHideTimeout)
-	chatHideTimeout = setTimeout(() => chat.style.opacity = 0, 8000)
+	chat.style.opacity = 1
+	if(oldName){
+		chat2.style.opacity = 0.5
+	}
+	chat2.setAttribute('data-name', oldName)
+	chat2.textContent = oldContent
+	chat.setAttribute('data-name', oldName = name)
+	chat.textContent = oldContent = msg
 }
 
 const actx = new AudioContext({sampleRate: 22050})
@@ -150,7 +154,7 @@ export function joinSession(){
 	if(w) leaveSession()
 	w = new WebSocket((localStorage.server || 'ws'+location.protocol.slice(4)+'//server.'+location.hostname+':81') + '/' + encodeURI(localStorage.name || 'anonymous'))
 	w.binaryType = 'arraybuffer'
-	w.onopen = () => speaking.innerHTML = '<img style="filter:invert(1);mix-blend-mode:plus-lighter" src=https://upload.wikimedia.org/wikipedia/commons/c/c1/Animated_loading_half-circle.gif /> Waiting for another person...<div style="font-size:.4em;opacity:.7">Tip: leave the tab open and we\'ll play a sound once you\'re connected!</div>'
+	w.onopen = () => speaking.innerHTML = '<img style="filter:invert(1);mix-blend-mode:plus-lighter" src=https://upload.wikimedia.org/wikipedia/commons/c/c1/Animated_loading_half-circle.gif /> Waiting for another person...'+(matchMedia('(pointer:fine)').matches?'<div style="font-size:.4em;opacity:.7">Tip: leave the tab open and we\'ll play a sound once you\'re connected!</div>':'')
 	lastJ = 0
 	speakinginfo.textContent = leFunny[Math.floor(Math.random() * leFunny.length)]
 	speaking.textContent = 'Connecting...'
@@ -200,6 +204,8 @@ function cleanupSession(){
 	sessionLength = 0
 	skinBtn.textContent = 'Next'
 	skinBtn.style.visibility = ''
+	chat.style.opacity = chat2.style.opacity = 0
+	oldName = oldContent = ''
 	if(w){
 		w.onclose = null
 		w.close(); w = null

@@ -26,16 +26,35 @@
 			color: white;
 			align-items: center;
 			justify-content: center;
-			height: 100%;
+			width: 100%; height: 100%;
 			margin: 0; gap: 10px;
 			user-select: none;
+			position: fixed;
 		}
-		.logo{
+		#logo{
 			position: absolute;
 			left: 12px;
 			top: 12px;
 			width: 48px; height: 48px;
 			z-index: 3;
+		}
+		#logoname{
+			position: absolute;
+			left: 66px;
+			top: 12px;
+			line-height: 48px;
+			height: 48px;
+			z-index: 1;
+			font-size: 1.8em;
+		}
+		#logoname:after{
+			content: '.count.land';
+			font-size: 0.4em;
+			opacity: 0.4;
+			display: block;
+			position: absolute;
+			bottom: 0;
+			line-height: 1em;
 		}
 		#homepage{
 			position: fixed;
@@ -45,7 +64,7 @@
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			z-index: 1;
+			z-index: 2;
 			row-gap: 16px;
 		}
 		.home-desc{
@@ -86,6 +105,10 @@
 			transform: translate(0, -2px);
 			box-shadow: 0px 2px 4px #8888;
 		}
+		.ui-button:active{
+			transform: translate(0,0);
+			box-shadow: 0px 0px 0px #8888;
+		}
 		.ui-input{
 			width: min(300px, calc(100% - 100px));
 			background: #4d4a47;
@@ -109,20 +132,22 @@
 			flex-direction: column;
 			max-height: calc(100% - 450px);
 		}
-		#chat-message{
+		#chat-message, #chat-message-2{
 			overflow: scroll;
-			margin: 10px 0;
+			margin: 0 0 10px 0;
 			background: #272727;
 			border-radius: 8px;
 			padding: 4px;
 			opacity: 0;
 			transition: 0.5s opacity;
 			word-wrap: break-word;
-			overflow: hidden;
 			user-select: all;
 			-webkit-user-select: text;
+			overflow: auto;
+			max-height: 4.5em;
+			line-height: 1.2em;
 		}
-		#chat-message:before{
+		#chat-message:before, #chat-message-2:before{
 			content: "[" attr(data-name) "] ";
 		}
 		#in-gram, #out-gram{
@@ -151,7 +176,7 @@
 			transition: .2s width;
 			transform-origin: left center;
 		}
-		:disabled{opacity: .4}
+		:disabled{opacity: .4; cursor: not-allowed;}
 	</style>
 </head>
 <body>
@@ -159,16 +184,17 @@
 		<div style="font-size:2.8em; margin-top: 96px;">Lamda</div>
 		<div><strong>Chat with strangers around the world!</strong></div>
 		<div class="home-desc">
-			<p>When you use lamda, we pick someone else at random and lets you talk 1:1 with them.</p>
+			<p>When you use lamda, we pick someone else at random and let you talk 1:1 with them.</p>
 			<p>To help stay safe, chats are anonymous and you can skip a chat at any time!</p>
 			<p>If you prefer, you can state some info about yourself below...</p>
-			<p><i>Who knows? Maybe it could be a conversation starter!</i></p>
+			<p style="font-style: italic;">Who knows? Maybe it could be a conversation starter!</p>
 		</div>
 		<input id="username" type="text" class="ui-input" maxlength="32" placeholder="Display name (optional)"
 			oninput="localStorage.name = this.value" onkeypress="if(event.keyCode===13)this.nextElementSibling.click()">
 		<button id="join" class="ui-button" style="background-color: #3469ac">Join chat</button>
 	</div>
-	<img src="./img/icon.png" draggable="false" class="logo" width="48" height="48">
+	<img src="./img/icon.png" draggable="false" id="logo">
+	<div id="logoname">Lamda</div>
 	<div style="flex-grow:5"></div>
 	<div id="speakinginfo">Connecting...</div>
 	<div id="speaking"></div>
@@ -183,6 +209,7 @@
 	</div>
 	<span id="duration">0:00</span>
 	<div id="chat-container">
+		<p id="chat-message-2"></p>
 		<p id="chat-message"></p>
 		<input id="chat-input" type="text" maxlength="300" placeholder="Send message" style="background-color: transparent;">
 	</div>
