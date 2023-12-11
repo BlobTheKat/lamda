@@ -78,9 +78,7 @@ async function voiceOn(){
 	muteBtn.classList.remove('active')
 	if(m == null) try{
 		m = 0
-		m = await navigator.mediaDevices.getUserMedia({audio: {
-			//echoCancellation: false, noiseSuppression: false, 
-		}})
+		m = await navigator.mediaDevices.getUserMedia({audio: true})
 		let node, ctx = actx, sampleRate = 22050
 		// Firefox, wtf??? https://bugzilla.mozilla.org/show_bug.cgi?id=1388586
 		try{ node = actx.createMediaStreamSource(m) }catch(e){
@@ -90,7 +88,7 @@ async function voiceOn(){
 				break
 			}catch(e){}
 		}
-		if(!node) throw "Please switch to chrome or safari, your browser does not support analyzing microphone input"
+		if(!node) throw alert("Please switch to chrome or safari, your browser does not support processing microphone input"), 1
 		let bufferSize = 2048, r = null
 		if(sampleRate !== 22050){
 			bufferSize = 2**Math.round(Math.log2(sampleRate/10))
