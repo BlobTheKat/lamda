@@ -1,0 +1,27 @@
+{
+	"short_name": "Lamda",
+	"name": "Lamda voice chat",
+	"icons": [
+		{
+			"src": "/img/icon.png",
+			"type": "image/png",
+			"sizes": "96x96"
+		}
+	],
+	"id": "/",
+	"start_url": "/",
+	"background_color": "#222",
+	"display": "standalone",
+	"scope": "/",
+	"theme_color": "#222",
+	"shortcuts": [
+		{
+			"name": "Start new session",
+			"short_name": "New session",
+			"description": "Start a new voice chat session",
+			"url": "/#start",
+			"icons": [{ "src": "/images/mute.svg", "sizes": "80x80" }]
+		}
+	],
+	"description": "Talk to strangers online!"
+}

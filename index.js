@@ -35,3 +35,5 @@ requestAnimationFrame(function drawGrams(){
 function formatDur(t){
 	return Math.floor(t/60)+(t%60<10?':0':':')+Math.floor(t%60)
 }
+
+if(location.hash == '#start') joinSession()
