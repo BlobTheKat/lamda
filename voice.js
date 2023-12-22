@@ -249,9 +249,9 @@ export const outBuffer = new Uint8Array(150)
 export const now = () => Math.floor(Date.now()/50)
 
 
-document.onkeypress = e => void(home.hidden && document.activeElement === document.body && (
+document.onkeydown = e => void(home.hidden && document.activeElement === document.body && (
 	e.code === 'KeyS' ? skinBtn.style.visibility || skinBtn.click()
-: e.code === 'KeyD' ? disconnectBtn.click()
-: e.code === 'KeyN' ? deafBtn.click()
-: e.code === 'KeyM' ? muteBtn.click()
-: e.code === 'Enter' && chatInput.focus()))
+	: e.code === 'KeyD' ? disconnectBtn.click()
+	: e.code === 'KeyN' ? deafBtn.click()
+	: e.code === 'KeyM' ? muteBtn.click()
+	: e.code === 'Enter' && chatInput.focus()))

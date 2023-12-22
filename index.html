@@ -2,7 +2,6 @@
 <html lang="en" style="height: 100%" ongesturestart="event.preventDefault()" onwheel="if(event.ctrlKey) event.preventDefault()" ontouchend="if(!event.isTrusted) return; event.preventDefault(); event.target.dispatchEvent(new TouchEvent('touchend', event)); event.target.click?.(); event.target.focus?.()">
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js" integrity="sha512-g2TeAWw5GPnX7z0Kn8nFbYfeHcvAu/tx6d6mrLe/90mkCxO+RcptyYpksUz35EO337F83bZwcmUyHiHamspkfg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<meta name="og:title" content="Lamda voice chat" />
 	<meta name="og:description" content="Chat anonymously with strangers online" />
@@ -16,12 +15,12 @@
 	<link rel="shortcut icon" href="/img/icon.png" />
 	<style>
 		[hidden]{display: none !important}
-		@font-face {
+		@font-face{
 			font-family: font;
 			src: url(/res/font.ttf);
 		}
 		* { box-sizing: border-box; -webkit-touch-callout: none; touch-action: manipulation !important; }
-		body, p, div, span {
+		body, p, div, span{
 			font-family: font;
 		}
 		body{
@@ -37,6 +36,7 @@
 			-webkit-user-select: none;
 			position: fixed;
 		}
+		a, a:visited{ color: inherit }
 		#logo{
 			position: absolute;
 			left: 12px;
@@ -61,6 +61,30 @@
 			position: absolute;
 			bottom: 0;
 			line-height: 1em;
+		}
+		#about{
+			background: #242424;
+			border: 1px solid gray;
+			border-radius: 8px;
+			color: white;
+			min-width: min(400px, 100% - 16px);
+		}
+		#about>div{
+			display: flex;
+			flex-direction: column;
+		}
+		#about p{
+			display: flex;
+			justify-content: center;
+			gap: 8px;
+		}
+		#about::backdrop{ background-color: #00000054 }
+		#about-a{
+			align-self: end;
+			margin-right: 8px;
+			margin-bottom: 8px;
+			font-weight: normal;
+			opacity: 0.2;
 		}
 		#homepage{
 			position: fixed;
@@ -177,7 +201,7 @@
 		#mute.active:after, #deafen.active:after{
 			width: 48px;
 		}
-		#mute:after, #deafen:after {
+		#mute:after, #deafen:after{
 			background: #e22;
 			outline: 2px #444 solid;
 			content: ''; display: block;
@@ -189,7 +213,7 @@
 		}
 		:disabled{ opacity: .4; cursor: not-allowed }
 		hr{ border: none; opacity: 0; display: inline }
-		@media screen and (max-width: 511px) {
+		@media screen and (max-width: 511px){
 			#speakinginfo{
 				font-size: .9em;
 			}
@@ -214,8 +238,17 @@
 			oninput="localStorage.name = this.value" onkeypress="if(event.keyCode===13)this.nextElementSibling.click()">
 		<button id="join" class="ui-button" style="background-color: #3469ac">Join chat</button>
 		<hr style="flex-grow: 2" />
+		<dialog id="about">
+			<div>
+				<p>Lamda - ©Zekiah-A & BlobKat</p>
+				<p style="display: flex;justify-content: center;gap: 8px;"><a href="https://github.com/BlobTheKat/lamda">github</a> | <a href="mailto://admin@rplace.live">contact us</a></p>
+				<hr style="flex-grow: 5;"/>
+				<button autofocus class="ui-button" style="background: #dd3d3d;width: auto;" onclick="about.close()">Close</button>
+			</div>
+		</dialog>
+		<a href="#" id="about-a" onclick="event.preventDefault(); about.showModal()">about</a>
 	</div>
-	<img src="./img/icon.png" draggable="false" id="logo">
+	<img alt="logo" src="./img/icon.png" draggable="false" id="logo">
 	<div id="logoname">Lamda</div>
 	<hr style="flex-grow:10" />
 	<div id="speakinginfo">Connecting...</div>
