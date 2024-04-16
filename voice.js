@@ -152,7 +152,7 @@ export function joinSession(){
 	skinBtn.textContent = 'Skip'
 	skinBtn.style.visibility = 'hidden'
 	if(w) leaveSession()
-	w = new WebSocket((localStorage.server || 'ws'+location.protocol.slice(4)+'//server.'+location.hostname+':81') + '/' + encodeURI(localStorage.name || 'anonymous'))
+	w = new WebSocket((localStorage.server || 'ws'+location.protocol.slice(4)+'//server.'+location.hostname+':8080') + '/' + encodeURI(localStorage.name || 'anonymous'))
 	w.binaryType = 'arraybuffer'
 	w.onopen = () => speaking.innerHTML = '<img style="filter:invert(1);mix-blend-mode:plus-lighter" src=https://upload.wikimedia.org/wikipedia/commons/c/c1/Animated_loading_half-circle.gif /> Waiting for another person...'+(matchMedia('(pointer:fine)').matches?'<div style="font-size:.4em;opacity:.7">Tip: leave the tab open and we\'ll play a sound once you\'re connected!</div>':'')
 	lastJ = 0
